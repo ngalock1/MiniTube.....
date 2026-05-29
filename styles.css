@@ -7,22 +7,45 @@
 }
 
 :root {
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #1f1f1f;
-  --bg-hover: #272727;
-  --bg-card: #212121;
-  --text-primary: #f1f1f1;
-  --text-secondary: #aaaaaa;
-  --text-muted: #717171;
-  --accent: #ff0000;
-  --accent-hover: #cc0000;
-  --border: #303030;
-  --navbar-height: 56px;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1a1a1a;
+  --bg-hover: #242424;
+  --bg-card: #141414;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
+  --accent: #ff0000; /* Vibrant "shining" red */
+  --accent-hover: #ff3333;
+  --accent-glow: rgba(255, 0, 0, 0.5);
+  --border: #262626;
+  --navbar-height: 64px;
   --sidebar-width: 240px;
-  --radius: 8px;
-  --radius-sm: 4px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.4);
-  --font: 'Roboto', 'YouTube Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --font: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
+}
+
+body.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-tertiary: #e5e7eb;
+  --bg-hover: #f9fafb;
+  --bg-card: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --accent: #ff0000;
+  --accent-hover: #dc2626;
+  --accent-glow: rgba(255, 0, 0, 0.2);
+  --border: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 html, body {
