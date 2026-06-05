@@ -99,6 +99,26 @@ button {
   border: none;
 }
 
+/* ── Logo Mark (Global) ── */
+.logo-mark {
+  width: 32px;
+  height: 22px;
+  background: var(--accent);
+  border-radius: 6px;
+  position: relative;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.logo-mark::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 7px;
+  border-left: 9px solid #fff;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
 .btn-primary {
   background: var(--accent);
   color: #fff;

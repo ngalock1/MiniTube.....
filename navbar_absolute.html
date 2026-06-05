@@ -1,0 +1,168 @@
+<nav class="navbar">
+  <!-- Left section -->
+  <div class="navbar-left">
+    @if (!isLandingPage) {
+      <button class="btn-icon back-btn" (click)="goBack()" title="Go back">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+    }
+
+    <!-- Logo -->
+    <a routerLink="/home" class="navbar-logo">
+      <div class="logo-mark"></div>
+      <span class="logo-text">MiniTube</span>
+    </a>
+  </div>
+
+  <!-- Search bar -->
+  <div class="navbar-search">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Search videos..."
+      [(ngModel)]="searchQuery"
+      (keydown.enter)="search()"
+    />
+    <button class="search-btn" (click)="search()" aria-label="Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Right section -->
+  <div class="navbar-right">
+    @if (authService.isLoggedIn && currentUser) {
+      <!-- Upload button -->
+      <a routerLink="/upload" class="upload-btn" title="Create">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12l7-7 7 7"/>
+        </svg>
+        <span>Upload</span>
+      </a>
+
+      <!-- Theme Toggle -->
+      @if (!isLandingPage) {
+        <button class="btn-icon" (click)="toggleTheme()" [title]="isLightTheme ? 'Dark Mode' : 'Light Mode'">
+          @if (isLightTheme) {
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          } @else {
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          }
+        </button>
+      }
+
+      <!-- Notifications -->
+      <div class="notification-wrap">
+        <button class="btn-icon" (click)="notificationsOpen = !notificationsOpen" title="Notifications">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="notification-badge"></span>
+        </button>
+
+        @if (notificationsOpen) {
+          <div class="dropdown notification-dropdown">
+            <div class="dropdown-header">
+              <span class="dropdown-name">Notifications</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="notification-list">
+              <div class="notification-item empty">
+                <p>No new notifications</p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Avatar + dropdown -->
+      <div class="avatar-wrap">
+        <div class="avatar" (click)="menuOpen = !menuOpen" [style.width.px]="34" [style.height.px]="34">
+          @if (currentUser.avatar) {
+            <img [src]="currentUser.avatar" [alt]="currentUser.channel_name" />
+          } @else {
+            {{ getInitials(currentUser) }}
+          }
+        </div>
+
+        @if (menuOpen) {
+          <div class="dropdown">
+            <div class="dropdown-header">
+              <div class="avatar" [style.width.px]="40" [style.height.px]="40">
+                @if (currentUser.avatar) {
+                  <img [src]="currentUser.avatar" alt="" />
+                } @else {
+                  {{ getInitials(currentUser) }}
+                }
+              </div>
+              <div class="dropdown-info">
+                <div class="dropdown-name">{{ currentUser.channel_name || currentUser.username }}</div>
+                <div class="dropdown-email">{{ currentUser.email }}</div>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            
+            <a [routerLink]="['/channel', currentUser.id]" class="dropdown-item" (click)="menuOpen=false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 12px; opacity: 0.7;">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Your channel
+            </a>
+            
+            <a routerLink="/profile" class="dropdown-item" (click)="menuOpen=false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 12px; opacity: 0.7;">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              Edit profile
+            </a>
+
+            <div class="dropdown-divider"></div>
+            
+            <!-- Admin Panel Link -->
+            @if (currentUser.is_staff) {
+              <button class="dropdown-item admin-link" (click)="openAdmin()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 12px; color: var(--accent);">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                Admin panel
+              </button>
+            }
+
+            <div class="dropdown-divider"></div>
+            
+            <button class="dropdown-item logout-btn" (click)="logout()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 12px; opacity: 0.7;">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              Sign out
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="auth-buttons">
+        <a routerLink="/login" class="nav-link">Sign in</a>
+        <a routerLink="/register" class="nav-cta">Register</a>
+      </div>
+    }
+  </div>
+</nav>
